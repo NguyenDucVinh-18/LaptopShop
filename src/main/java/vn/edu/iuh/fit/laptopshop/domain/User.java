@@ -1,6 +1,11 @@
 package vn.edu.iuh.fit.laptopshop.domain;
 
-public class user {
+import jakarta.persistence.*;
+
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String email;
     private String password;
@@ -56,7 +61,7 @@ public class user {
         this.phone = phone;
     }
 
-    public user() {
+    public User() {
     }
 
     @Override
