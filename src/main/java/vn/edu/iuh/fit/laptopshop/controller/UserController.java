@@ -2,13 +2,12 @@ package vn.edu.iuh.fit.laptopshop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.laptopshop.domain.User;
 import vn.edu.iuh.fit.laptopshop.service.impl.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -33,8 +32,6 @@ public class UserController {
     }
 
 
-
-
     @RequestMapping("/admin/user")
     public String getAllUser(Model model){
         List<User> users = userService.findAll();
@@ -47,4 +44,35 @@ public class UserController {
         userService.save(newUser);
         return "redirect:/admin/user";
     }
+
+    @RequestMapping("/admin/user/{id}")
+    public String getViewUser(Model model, @PathVariable("id") long id){
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("id", id);
+        return "/admin/user/show";
+    }
+
+    @RequestMapping("/admin/user/update/{id}")
+    public String getUpdateUserPage(Model model, @PathVariable("id") long id){
+        User currentUser = userService.findById(id);
+        model.addAttribute("newUser", currentUser);
+        System.out.println(currentUser);
+        return "/admin/user/update";
+    }
+
+    @PostMapping("/admin/user/update/{id}")
+    public String updateUserPage(Model model, @ModelAttribute("newUser") User user){
+        User currentUser = userService.findById(user.getId());
+        System.out.println(currentUser);
+        if(currentUser != null){
+            currentUser.setAddress(user.getAddress());
+            currentUser.setFullName(user.getFullName());
+            currentUser.setPhone(user.getPhone());
+            userService.save(currentUser);
+        }
+        return "/admin/user/update";
+    }
+
+
 }

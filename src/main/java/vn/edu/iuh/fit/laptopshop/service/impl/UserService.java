@@ -23,8 +23,8 @@ public class UserService implements IService<User, Long> {
     }
 
     @Override
-    public Optional<User> findById(Long aLong) {
-        return userRepository.findById(aLong);
+    public User findById(Long aLong) {
+        return userRepository.findById(aLong).orElse(null);
     }
 
     @Override

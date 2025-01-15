@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface IService<T, p> {
     T save(T t);
-    Optional<T> findById(p p);
+    T findById(p p);
     List<T> findAll();
     boolean remove(p p);
 }
