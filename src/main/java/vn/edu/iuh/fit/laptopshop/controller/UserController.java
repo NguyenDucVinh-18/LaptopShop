@@ -57,22 +57,24 @@ public class UserController {
     public String getUpdateUserPage(Model model, @PathVariable("id") long id){
         User currentUser = userService.findById(id);
         model.addAttribute("newUser", currentUser);
-        System.out.println(currentUser);
         return "/admin/user/update";
     }
 
-    @PostMapping("/admin/user/update/{id}")
-    public String updateUserPage(Model model, @ModelAttribute("newUser") User user){
+    @PostMapping("/admin/user/update")
+    public String updateUser(Model model, @ModelAttribute("newUser") User user){
         User currentUser = userService.findById(user.getId());
-        System.out.println(currentUser);
         if(currentUser != null){
             currentUser.setAddress(user.getAddress());
             currentUser.setFullName(user.getFullName());
             currentUser.setPhone(user.getPhone());
+            currentUser.setPassword(currentUser.getPassword());
+
+
             userService.save(currentUser);
         }
-        return "/admin/user/update";
+        return "redirect:/admin/user";
     }
+
 
 
 }
