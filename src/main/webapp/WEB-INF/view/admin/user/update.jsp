@@ -34,6 +34,10 @@
                     <label class="form-label">Email:</label>
                     <form:input type="email" class="form-control"  path="email" readonly="true"/>
                 </div>
+                <div class="mb-3" style="display: none">
+                    <label class="form-label">PassWord:</label>
+                    <form:input type="text" class="form-control" path="password"/>
+                </div>
                 <div class="mb-3">
                     <label class="form-label">FullName:</label>
                     <form:input type="text" class="form-control" path="fullName"/>

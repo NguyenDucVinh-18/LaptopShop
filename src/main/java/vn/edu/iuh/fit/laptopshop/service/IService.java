@@ -7,5 +7,5 @@ public interface IService<T, p> {
     T save(T t);
     T findById(p p);
     List<T> findAll();
-    boolean remove(p p);
+    void deleteById(p p);
 }

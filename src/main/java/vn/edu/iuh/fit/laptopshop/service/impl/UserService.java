@@ -33,7 +33,7 @@ public class UserService implements IService<User, Long> {
     }
 
     @Override
-    public boolean remove(Long aLong) {
-        return false;
+    public void deleteById(Long aLong) {
+         userRepository.deleteById(aLong);
     }
 }
