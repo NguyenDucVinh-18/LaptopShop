@@ -2,6 +2,8 @@ package vn.edu.iuh.fit.laptopshop.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -18,6 +20,9 @@ public class Product {
     private long sold;
     private String factory;
     private String target;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderDetail> orderDetails;
 
     public Product(long id, String name, double price, String image, String detailDesc, String shortDesc, long quantity, long sold, String factory, String target) {
         this.id = id;
@@ -36,7 +41,6 @@ public class Product {
     }
 
     public long getId() {
-
         return id;
     }
 

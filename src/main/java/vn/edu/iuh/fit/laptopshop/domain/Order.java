@@ -1,6 +1,9 @@
 package vn.edu.iuh.fit.laptopshop.domain;
 
 import jakarta.persistence.*;
+import org.aspectj.weaver.ast.Or;
+
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -9,6 +12,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double totalPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> orderDetails;
+
+
 
     public Order(long id, double totalPrice) {
         this.id = id;
