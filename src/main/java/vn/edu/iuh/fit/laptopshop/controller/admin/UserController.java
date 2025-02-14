@@ -1,4 +1,4 @@
-package vn.edu.iuh.fit.laptopshop.controller;
+package vn.edu.iuh.fit.laptopshop.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +7,6 @@ import vn.edu.iuh.fit.laptopshop.domain.User;
 import vn.edu.iuh.fit.laptopshop.service.impl.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -36,7 +35,7 @@ public class UserController {
     public String getAllUser(Model model){
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
-        return "admin/user/table-user";
+        return "admin/user/show";
     }
 
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
@@ -50,7 +49,7 @@ public class UserController {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         model.addAttribute("id", id);
-        return "/admin/user/show";
+        return "/admin/user/detail";
     }
 
     @RequestMapping("/admin/user/update/{id}")

@@ -1,14 +1,14 @@
-package vn.edu.iuh.fit.laptopshop.controller;
+package vn.edu.iuh.fit.laptopshop.controller.admin;
 
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ProductController {
+public class DashBoardController {
 
-    @GetMapping("/admin/product")
+    @GetMapping("/admin")
     public String getDashBoard() {
-        return "/admin/product/show";
+        return "/admin/dashboard/show";
     }
 }
