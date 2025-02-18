@@ -1,11 +1,14 @@
 package vn.edu.iuh.fit.laptopshop.controller.admin;
 
 import jakarta.servlet.ServletContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import vn.edu.iuh.fit.laptopshop.domain.Role;
 import vn.edu.iuh.fit.laptopshop.domain.User;
+import vn.edu.iuh.fit.laptopshop.repository.RoleRepository;
 import vn.edu.iuh.fit.laptopshop.service.impl.UploadService;
 import vn.edu.iuh.fit.laptopshop.service.impl.UserService;
 
@@ -19,11 +22,14 @@ public class UserController {
 
     private final UserService userService;
     private final UploadService uploadService;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-
-    public UserController(UserService userService, UploadService uploadService) {
+    public UserController(UserService userService, UploadService uploadService, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userService = userService;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @RequestMapping
@@ -50,10 +56,17 @@ public class UserController {
     @PostMapping(value = "/admin/user/create")
     public String getCreateUserPage(Model model, @ModelAttribute("newUser") User newUser, @RequestParam("file") MultipartFile file){
 
-        String avatar =  uploadService.handleSaveUploadFile(file, "avatar");
-        System.out.println(avatar);
 
-//        userService.save(newUser);
+        String avatar =  uploadService.handleSaveUploadFile(file, "avatar");
+        String hasdPassword = passwordEncoder.encode(newUser.getPassword());
+        Role role = roleRepository.findByName(newUser.getRole().getName());
+
+        newUser.setAvatar(avatar);
+        newUser.setPassword(hasdPassword);
+        newUser.setRole(role);
+
+
+        userService.save(newUser);
         return "redirect:/admin/user";
     }
 
