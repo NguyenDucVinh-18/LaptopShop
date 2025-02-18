@@ -1,20 +1,29 @@
 package vn.edu.iuh.fit.laptopshop.controller.admin;
 
+import jakarta.servlet.ServletContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.edu.iuh.fit.laptopshop.domain.User;
+import vn.edu.iuh.fit.laptopshop.service.impl.UploadService;
 import vn.edu.iuh.fit.laptopshop.service.impl.UserService;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
+    private final UploadService uploadService;
 
-    public UserController(UserService userService) {
+
+    public UserController(UserService userService, UploadService uploadService) {
         this.userService = userService;
+        this.uploadService = uploadService;
     }
 
     @RequestMapping
@@ -38,9 +47,13 @@ public class UserController {
         return "admin/user/show";
     }
 
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String getCreateUserPage(Model model, @ModelAttribute("newUser") User newUser){
-        userService.save(newUser);
+    @PostMapping(value = "/admin/user/create")
+    public String getCreateUserPage(Model model, @ModelAttribute("newUser") User newUser, @RequestParam("file") MultipartFile file){
+
+        String avatar =  uploadService.handleSaveUploadFile(file, "avatar");
+        System.out.println(avatar);
+
+//        userService.save(newUser);
         return "redirect:/admin/user";
     }
 

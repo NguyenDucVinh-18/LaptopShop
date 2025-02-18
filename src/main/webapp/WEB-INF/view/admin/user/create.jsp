@@ -50,7 +50,7 @@
                             <h3>Create a user</h3>
                             <hr />
                             <%--@elvariable id="newUser" type=""--%>
-                            <form:form method="post" action="/admin/user/create" modelAttribute="newUser">
+                            <form:form method="post" enctype="multipart/form-data" action="/admin/user/create" modelAttribute="newUser">
                                 <div class="row">
                                     <div class="col">
                                         <label class="form-label">Email:</label>
@@ -81,16 +81,18 @@
                                 <div class="row">
                                     <div class="col">
                                         <label class="form-label">Role:</label>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Admin</option>
-                                            <option value="2">Client</option>
-                                        </select>
+                                        <form:select class="form-select" path="role.name">
+                                            <form:option value="ADMIN">ADMIN</form:option>
+                                            <form:option value="USER">USER</form:option>
+                                        </form:select>
+
                                     </div>
 
                                     <div class="col">
                                         <label for="avatarFile" class="form-label">Avatar:</label>
                                         <input class="form-control" type="file" id="avatarFile"
-                                            accept=".png, .jpg, .jpeg">
+                                            accept=".png, .jpg, .jpeg"
+                                               name="file">
                                     </div>
                                     
                                 </div>
